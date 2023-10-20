@@ -1,7 +1,12 @@
 const Orders = require("../models/Orders")
 
-module.exports.listOfOrder = (req, res) =>{
-    res.send("Vous avez recu une nouvelle commande")
+module.exports.listOfOrder = async(req, res) =>{
+    try {
+        const listOfOrders = await Orders.find()
+        res.status(200).json({order: listOfOrders, message: 'liste des commande de création d\'entreprise'})
+    } catch (error) {
+        res.status(500).send(error)
+    }
 }
 
 module.exports.newOrder = async(req, res) =>{

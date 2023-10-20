@@ -5,7 +5,6 @@ const cors = require('cors')
 const cookieparser = require('cookie-parser')
 const router = require('./src/routes/Order.Route')
 const connectDB = require('./src/services/ServiceMongoDB')
-const mongodb = require('mongodb')
 
 
 //Initialisation du serveur
@@ -13,8 +12,8 @@ const mongodb = require('mongodb')
 const app = express()
 
 app.use(cors())
-app.use(bodyparser.urlencoded({ extended: true}))
-app.use(express.json())
+app.use(bodyparser.urlencoded({ extended: false}))
+app.use(express.json({limit: "10mb"}))
 
 app.use("/api/v1/", router)
 

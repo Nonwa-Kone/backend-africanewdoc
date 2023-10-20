@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const OrderSchema = new Schema({
+    statu: String,
     email: {
         type: String,
         unique: true,
@@ -34,7 +35,7 @@ const OrderSchema = new Schema({
         type: Number,
         trim: true
     },
-    adresseOfSiege: {
+    siege: {
         type: String,
         trim: true,
         lowercase: true
@@ -43,8 +44,15 @@ const OrderSchema = new Schema({
         type: String,
         trim: true,
         lowercase: true
+    },
+    faceIdentity:  String,
+    dosIdentity: String,
+    extraitDeNaissance: String,
+    cassierJudiciaire: String,
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-
 })
 
 module.exports = mongoose.model('Order', OrderSchema)
