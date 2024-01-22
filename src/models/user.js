@@ -1,6 +1,8 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema(
   {
@@ -17,18 +19,50 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       lowercase: true,
-      validate: (v) => {
-        if (!validator.isEmail(v)) return "Invalid email";
+      validate(v) {
+        if (!validator.isEmail(v)) {
+          throw new Error("Invalid email");
+        }
       },
     },
     password: {
       type: String,
       trim: true,
-      required: [true, "Le mot de passe est obligatoire"],
+      required: [true, "password is required"],
     },
+    authTokens: [
+      {
+        authToken: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
+
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+
+  delete user.password;
+  delete user.authTokens;
+
+  return user;
+};
+
+userSchema.methods.generateAutTokenAndSaveUser = async function () {
+  const authToken = jwt.sign(
+    { _id: this._id.toString() },
+    process.env.SECRET_TOKEN
+  );
+
+  this.authTokens.push({ authToken });
+
+  await this.save();
+
+  return authToken;
+};
 
 userSchema.pre("save", async function () {
   if (this.isModified("password")) {

@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieparser = require("cookie-parser");
 const router = require("./src/routes/Order.Route");
 const connectDB = require("./src/services/ServiceMongoDB");
+const userRoute = require("./src/routes/user");
 
 //Initialisation du serveur
 
@@ -15,6 +16,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(express.json({ limit: "10mb" }));
 
 app.use("/api/v1/", router);
+app.use("/api/v1/", userRoute);
 
 app.listen(process.env.PORT, process.env.ADRESS, function () {
   connectDB().catch((err) => console.log(err));
