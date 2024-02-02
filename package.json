@@ -8,7 +8,12 @@
     "serve": "nodemon index.js",
     "build": "npm i"
   },
-  "keywords": [],
+  "keywords": [
+    "backend",
+    "africadocnew",
+    "architecture",
+    "miscroservice"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

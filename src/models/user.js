@@ -53,8 +53,9 @@ userSchema.methods.toJSON = function () {
 
 userSchema.methods.generateAutTokenAndSaveUser = async function () {
   const authToken = jwt.sign(
-    { _id: this._id.toString() },
-    process.env.SECRET_TOKEN
+    { _id: this._id.toString(), username: this.username, email: this.email },
+    process.env.SECRET_TOKEN,
+    { expiresIn: "1d" }
   );
 
   this.authTokens.push({ authToken });
