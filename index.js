@@ -6,11 +6,12 @@ const cookieParser = require("cookie-parser");
 const router = require("./src/routes/Order.Route");
 const connectDB = require("./src/services/ServiceMongoDB");
 const userRoute = require("./src/routes/user");
+const BirthRoute = require('./src/routes/Birth.routes')
 
 //Initialisation du serveur
 
 const app = express();
-app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.json({ limit: "10mb" }));
 
 app.use(
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/", router);
 app.use("/api/v1/", userRoute);
+app.use("/api/v1/birth/", BirthRoute);
 
 app.listen(process.env.PORT, process.env.ADRESS, function () {
   connectDB().catch((err) => console.log(err));
