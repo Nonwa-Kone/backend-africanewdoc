@@ -1,12 +1,12 @@
 {
-  "name": "backend-africadocnew",
+  "name": "backendafricadocnew",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
     "serve": "nodemon index.js",
-    "build": "yarn add"
+    "build": "npm install"
   },
   "keywords": [
     "backend",
